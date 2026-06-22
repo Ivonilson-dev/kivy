@@ -1,0 +1,478 @@
+#:kivy 2.0.0
+
+<StartScreen>:
+    name: 'start'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 30
+        spacing: 20
+        canvas.before:
+            Color:
+                rgba: 0.117, 0.117, 0.180, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        # Título do jogo
+        Label:
+            text: 'JOGO DA MEMÓRIA'
+            font_size: '32sp'
+            bold: True
+            color: 0.537, 0.706, 0.980, 1
+            size_hint_y: None
+            height: 100
+
+        # Campo de entrada de Nome
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 8
+            size_hint_y: None
+            height: 90
+
+            Label:
+                text: 'Nome do Jogador:'
+                font_size: '16sp'
+                color: 0.804, 0.839, 0.957, 1
+                halign: 'left'
+                text_size: self.size
+                size_hint_y: None
+                height: 25
+
+            TextInput:
+                id: name_input
+                multiline: False
+                font_size: '18sp'
+                padding: [12, 10, 12, 10]
+                background_color: 0.192, 0.196, 0.266, 1
+                foreground_color: 0.804, 0.839, 0.957, 1
+                cursor_color: 0.804, 0.839, 0.957, 1
+                hint_text: 'Digite seu nome...'
+                hint_text_color: 0.45, 0.45, 0.55, 1
+                size_hint_y: None
+                height: 48
+
+        # Seletor de Dificuldade
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 8
+            size_hint_y: None
+            height: 90
+
+            Label:
+                text: 'Dificuldade:'
+                font_size: '16sp'
+                color: 0.804, 0.839, 0.957, 1
+                halign: 'left'
+                text_size: self.size
+                size_hint_y: None
+                height: 25
+
+            BoxLayout:
+                orientation: 'horizontal'
+                spacing: 15
+                size_hint_y: None
+                height: 45
+
+                ToggleButton:
+                    id: btn_easy
+                    text: 'Fácil (4x4)'
+                    group: 'difficulty'
+                    state: 'down'
+                    allow_no_selection: False
+                    font_size: '15sp'
+                    bold: True
+                    background_normal: ''
+                    background_color: 0, 0, 0, 0
+                    canvas.before:
+                        Color:
+                            rgba: 0.537, 0.706, 0.980, 1 if self.state == 'down' else 0.192, 0.196, 0.266, 1
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [8]
+                    color: [0.067, 0.067, 0.106, 1] if self.state == 'down' else [0.804, 0.839, 0.957, 1]
+
+                ToggleButton:
+                    id: btn_hard
+                    text: 'Difícil (6x6)'
+                    group: 'difficulty'
+                    allow_no_selection: False
+                    font_size: '15sp'
+                    bold: True
+                    background_normal: ''
+                    background_color: 0, 0, 0, 0
+                    canvas.before:
+                        Color:
+                            rgba: 0.537, 0.706, 0.980, 1 if self.state == 'down' else 0.192, 0.196, 0.266, 1
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [8]
+                    color: [0.067, 0.067, 0.106, 1] if self.state == 'down' else [0.804, 0.839, 0.957, 1]
+
+        # Mensagem de erro (invisível por padrão)
+        Label:
+            id: error_label
+            text: ''
+            color: 0.953, 0.545, 0.659, 1
+            font_size: '14sp'
+            size_hint_y: None
+            height: 30
+
+        Widget: # Espaço elástico para empurrar os botões para baixo
+
+        # Botão Jogar
+        Button:
+            text: 'JOGAR'
+            font_size: '18sp'
+            bold: True
+            size_hint_y: None
+            height: 55
+            background_normal: ''
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 0.651, 0.890, 0.631, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [10]
+            color: 0.067, 0.067, 0.106, 1
+            on_press: root.iniciar_jogo()
+
+        # Botão Placar de Líderes
+        Button:
+            text: 'Ver Placar de Líderes'
+            font_size: '16sp'
+            size_hint_y: None
+            height: 48
+            background_normal: ''
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 0.192, 0.196, 0.266, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [8]
+            color: 0.804, 0.839, 0.957, 1
+            on_press: root.ver_placar()
+
+
+<GameScreen>:
+    name: 'game'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 15
+        canvas.before:
+            Color:
+                rgba: 0.117, 0.117, 0.180, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        # Informações do topo
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 60
+            spacing: 10
+
+            Label:
+                text: 'Jogador: ' + root.jogador_nome
+                font_size: '16sp'
+                bold: True
+                color: 0.804, 0.839, 0.957, 1
+                halign: 'left'
+                text_size: self.size
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_x: None
+                width: 160
+                Label:
+                    text: 'Jogadas: ' + str(root.jogadas)
+                    font_size: '14sp'
+                    color: 0.804, 0.839, 0.957, 1
+                    halign: 'right'
+                    text_size: self.size
+                Label:
+                    text: 'Tempo: ' + root.tempo_formatado
+                    font_size: '14sp'
+                    color: 0.804, 0.839, 0.957, 1
+                    halign: 'right'
+                    text_size: self.size
+
+        # Tabuleiro dinâmico das cartas
+        GridLayout:
+            id: grid_tabuleiro
+            cols: 4
+            spacing: 8
+            padding: 2
+
+        # Rodapé de controles
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 15
+            size_hint_y: None
+            height: 48
+
+            Button:
+                text: 'Reiniciar'
+                font_size: '15sp'
+                bold: True
+                background_normal: ''
+                background_color: 0, 0, 0, 0
+                canvas.before:
+                    Color:
+                        rgba: 0.192, 0.196, 0.266, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [8]
+                color: 0.804, 0.839, 0.957, 1
+                on_press: root.reiniciar_jogo()
+
+            Button:
+                text: 'Sair'
+                font_size: '15sp'
+                bold: True
+                background_normal: ''
+                background_color: 0, 0, 0, 0
+                canvas.before:
+                    Color:
+                        rgba: 0.953, 0.545, 0.659, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [8]
+                color: 0.067, 0.067, 0.106, 1
+                on_press: root.voltar_menu()
+
+
+<CardButton>:
+    background_normal: self.card_image if (self.is_revealed or self.is_matched) else 'imagens/verso.png'
+    background_down: self.card_image if (self.is_revealed or self.is_matched) else 'imagens/verso.png'
+    background_color: [1, 1, 1, 1]
+    text: ''
+
+
+<LeaderboardScreen>:
+    name: 'leaderboard'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 15
+        canvas.before:
+            Color:
+                rgba: 0.117, 0.117, 0.180, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: 'PLACAR DE LÍDERES'
+            font_size: '26sp'
+            bold: True
+            color: 0.537, 0.706, 0.980, 1
+            size_hint_y: None
+            height: 50
+
+        # Seletor de placa por dificuldade
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 12
+            size_hint_y: None
+            height: 42
+            ToggleButton:
+                id: tab_easy
+                text: 'Fácil (4x4)'
+                group: 'tab_diff'
+                state: 'down'
+                allow_no_selection: False
+                font_size: '14sp'
+                bold: True
+                background_normal: ''
+                background_color: 0, 0, 0, 0
+                canvas.before:
+                    Color:
+                        rgba: 0.537, 0.706, 0.980, 1 if self.state == 'down' else 0.192, 0.196, 0.266, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [6]
+                color: [0.067, 0.067, 0.106, 1] if self.state == 'down' else [0.804, 0.839, 0.957, 1]
+                on_press: root.carregar_placar('facil')
+
+            ToggleButton:
+                id: tab_hard
+                text: 'Difícil (6x6)'
+                group: 'tab_diff'
+                allow_no_selection: False
+                font_size: '14sp'
+                bold: True
+                background_normal: ''
+                background_color: 0, 0, 0, 0
+                canvas.before:
+                    Color:
+                        rgba: 0.537, 0.706, 0.980, 1 if self.state == 'down' else 0.192, 0.196, 0.266, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [6]
+                color: [0.067, 0.067, 0.106, 1] if self.state == 'down' else [0.804, 0.839, 0.957, 1]
+                on_press: root.carregar_placar('dificil')
+
+        # Conteúdo do Placar
+        ScrollView:
+            BoxLayout:
+                id: lista_pontuacoes
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 8
+                padding: [0, 5, 0, 5]
+
+        # Botão de retorno
+        Button:
+            text: 'Voltar ao Menu'
+            font_size: '16sp'
+            bold: True
+            size_hint_y: None
+            height: 48
+            background_normal: ''
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 0.192, 0.196, 0.266, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [8]
+            color: 0.804, 0.839, 0.957, 1
+            on_press: root.voltar_menu()
+
+
+<LeaderboardItem>:
+    orientation: 'horizontal'
+    padding: [12, 8, 12, 8]
+    size_hint_y: None
+    height: 45
+    spacing: 10
+    canvas.before:
+        Color:
+            rgba: 0.192, 0.196, 0.266, 0.6
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [6]
+
+    Label:
+        text: root.posicao
+        font_size: '16sp'
+        bold: True
+        color: 0.537, 0.706, 0.980, 1
+        size_hint_x: 0.12
+    Label:
+        text: root.nome
+        font_size: '16sp'
+        bold: True
+        color: 0.804, 0.839, 0.957, 1
+        halign: 'left'
+        text_size: self.size
+        size_hint_x: 0.48
+    Label:
+        text: root.jogadas + ' jogadas'
+        font_size: '13sp'
+        color: 0.804, 0.839, 0.957, 0.7
+        size_hint_x: 0.22
+    Label:
+        text: root.tempo
+        font_size: '13sp'
+        color: 0.804, 0.839, 0.957, 0.7
+        size_hint_x: 0.18
+
+
+<VictoryPopup>:
+    title: ''
+    size_hint: 0.85, 0.42
+    auto_dismiss: False
+    background: '' 
+    background_color: 0, 0, 0, 0
+    canvas.before:
+        Color:
+            rgba: 0.117, 0.117, 0.180, 0.98
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [12]
+        Color:
+            rgba: 0.192, 0.196, 0.266, 1
+        Line:
+            width: 1.2
+            rounded_rectangle: [self.x, self.y, self.width, self.height, 12, 12, 12, 12, 100]
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 15
+        spacing: 12
+        Label:
+            text: '¡VITÓRIA!'
+            font_size: '22sp'
+            bold: True
+            color: 0.651, 0.890, 0.631, 1
+            size_hint_y: None
+            height: 35
+        Label:
+            text: 'Parabéns, você encontrou todos os pares!'
+            font_size: '15sp'
+            color: 0.804, 0.839, 0.957, 0.9
+            halign: 'center'
+            size_hint_y: None
+            height: 25
+        Label:
+            id: stats_label
+            text: 'Jogadas: 0 | Tempo: 00:00'
+            font_size: '16sp'
+            bold: True
+            color: 0.537, 0.706, 0.980, 1
+            halign: 'center'
+            size_hint_y: None
+            height: 30
+        Widget: # Pequeno espaçador
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 12
+            size_hint_y: None
+            height: 45
+            Button:
+                text: 'Jogar Novamente'
+                font_size: '14sp'
+                bold: True
+                background_normal: ''
+                background_color: 0, 0, 0, 0
+                canvas.before:
+                    Color:
+                        rgba: 0.537, 0.706, 0.980, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [6]
+                color: 0.067, 0.067, 0.106, 1
+                on_press: root.jogar_novamente()
+            Button:
+                text: 'Ir para o Menu'
+                font_size: '14sp'
+                bold: True
+                background_normal: ''
+                background_color: 0, 0, 0, 0
+                canvas.before:
+                    Color:
+                        rgba: 0.192, 0.196, 0.266, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [6]
+                color: 0.804, 0.839, 0.957, 1
+                on_press: root.ir_para_menu()
