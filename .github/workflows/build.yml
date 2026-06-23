@@ -36,7 +36,7 @@ jobs:
       - name: Instalar Dependencias do Sistema
         run: |
           sudo apt-get update
-          sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip python3-venv python3-virtualenv autoconf libtool pkg-config zlib1g-dev libjpeg-dev libpng-dev libncurses5-dev libssl-dev cmake libffi-dev libgomp1 libsqlite3-dev libbz2-dev liblzma-dev libreadline-dev uuid-dev libtinfo6
+          sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip python3-venv python3-virtualenv autoconf libtool pkg-config zlib1g-dev libjpeg-dev libpng-dev libncurses5-dev libssl-dev cmake libffi-dev libgomp1 libsqlite3-dev libbz2-dev liblzma-dev libreadline-dev uuid-dev libtinfo6 automake autopoint gettext build-essential
           
       - name: Configurar Ambiente Virtual e Instalar Buildozer
         run: |
