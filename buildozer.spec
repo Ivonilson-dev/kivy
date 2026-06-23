@@ -49,8 +49,12 @@ android.ndk = 25b
 # (bool) Use private storage or shared storage
 android.private_storage = 1
 
-# (str) Bootstrap to use for android (sdl2 is the default for kivy)
-android.bootstrap = sdl2
+p4a.bootstrap = sdl2
+
+# (bool) If True, then automatically accept SDK license agreements.
+# This is intended for automation only.
+android.accept_sdk_license = True
+
 
 [buildozer]
 

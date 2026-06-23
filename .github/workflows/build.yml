@@ -33,9 +33,11 @@ jobs:
       - name: Compilar APK com Buildozer
         run: |
           # Aceita licenças do Android SDK automaticamente
-          export APP_ANDROID_ACCEPT_SDK_LICENSE=y
+          export APP_ANDROID_ACCEPT_SDK_LICENSE=1
           # Executa o buildozer para compilar o APK em modo de debug
           buildozer -v android debug
+        env:
+          APP_ANDROID_ACCEPT_SDK_LICENSE: "1"
 
       - name: Upload do APK
         uses: actions/upload-artifact@v4
