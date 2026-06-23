@@ -48,9 +48,14 @@ jobs:
       - name: Compilar APK com Buildozer
         run: |
           source venv/bin/activate
-          # Evita conflitos com caminhos de SDK/NDK predefinidos no runner do GitHub
+          # Remove completamente as variáveis do SDK/NDK do runner do GitHub para evitar conflitos
           unset ANDROID_SDK_ROOT
           unset ANDROID_NDK_ROOT
+          unset ANDROID_NDK
+          unset ANDROID_NDK_HOME
+          unset ANDROID_NDK_LATEST_HOME
+          unset ANDROID_SDK
+          unset ANDROID_HOME
           # Aceita licenças do Android SDK automaticamente
           export APP_ANDROID_ACCEPT_SDK_LICENSE=1
           # Executa o buildozer para compilar o APK em modo de debug
