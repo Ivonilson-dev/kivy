@@ -36,12 +36,18 @@ jobs:
       - name: Instalar Dependencias do Sistema
         run: |
           sudo apt-get update
-          sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libjpeg-dev libpng-dev libncurses5-dev libssl-dev cmake libffi-dev libgomp1
+          sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip python3-venv python3-virtualenv autoconf libtool pkg-config zlib1g-dev libjpeg-dev libpng-dev libncurses5-dev libssl-dev cmake libffi-dev libgomp1 libsqlite3-dev libbz2-dev liblzma-dev libreadline-dev uuid-dev libtinfo6
+          
+      - name: Configurar Ambiente Virtual e Instalar Buildozer
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
           pip install --upgrade pip
-          pip install buildozer "cython<3.0"
+          pip install buildozer "cython<3.0" virtualenv
 
       - name: Compilar APK com Buildozer
         run: |
+          source venv/bin/activate
           # Evita conflitos com caminhos de SDK/NDK predefinidos no runner do GitHub
           unset ANDROID_SDK_ROOT
           unset ANDROID_NDK_ROOT
