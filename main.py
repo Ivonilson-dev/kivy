@@ -1,5 +1,13 @@
 import os
 import random
+import sys
+
+# Se estiver rodando no PC, simula a proporção de tela de um celular vertical
+if sys.platform not in ('android', 'ios'):
+    from kivy.config import Config
+    Config.set('graphics', 'width', '360')
+    Config.set('graphics', 'height', '640')
+
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import StringProperty, NumericProperty, BooleanProperty
@@ -245,12 +253,13 @@ class LeaderboardScreen(Screen):
         if not melhores:
             # Exibe uma mensagem se não houver pontuações gravadas
             from kivy.uix.label import Label
+            from kivy.metrics import dp
             mensagem = Label(
                 text='Nenhuma pontuação registrada ainda!',
                 color=[0.804, 0.839, 0.957, 0.6],
                 font_size='16sp',
                 size_hint_y=None,
-                height=100
+                height=dp(100)
             )
             lista.add_widget(mensagem)
         else:

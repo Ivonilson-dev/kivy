@@ -4,8 +4,8 @@
     name: 'start'
     BoxLayout:
         orientation: 'vertical'
-        padding: 30
-        spacing: 20
+        padding: dp(30)
+        spacing: dp(20)
         canvas.before:
             Color:
                 rgba: 0.117, 0.117, 0.180, 1
@@ -20,14 +20,14 @@
             bold: True
             color: 0.537, 0.706, 0.980, 1
             size_hint_y: None
-            height: 100
+            height: dp(100)
 
         # Campo de entrada de Nome
         BoxLayout:
             orientation: 'vertical'
-            spacing: 8
+            spacing: dp(8)
             size_hint_y: None
-            height: 90
+            height: dp(90)
 
             Label:
                 text: 'Nome do Jogador:'
@@ -36,27 +36,27 @@
                 halign: 'left'
                 text_size: self.size
                 size_hint_y: None
-                height: 25
+                height: dp(25)
 
             TextInput:
                 id: name_input
                 multiline: False
                 font_size: '18sp'
-                padding: [12, 10, 12, 10]
+                padding: [dp(12), dp(10), dp(12), dp(10)]
                 background_color: 0.192, 0.196, 0.266, 1
                 foreground_color: 0.804, 0.839, 0.957, 1
                 cursor_color: 0.804, 0.839, 0.957, 1
                 hint_text: 'Digite seu nome...'
                 hint_text_color: 0.45, 0.45, 0.55, 1
                 size_hint_y: None
-                height: 48
+                height: dp(48)
 
         # Seletor de Dificuldade
         BoxLayout:
             orientation: 'vertical'
-            spacing: 8
+            spacing: dp(8)
             size_hint_y: None
-            height: 90
+            height: dp(90)
 
             Label:
                 text: 'Dificuldade:'
@@ -65,13 +65,13 @@
                 halign: 'left'
                 text_size: self.size
                 size_hint_y: None
-                height: 25
+                height: dp(25)
 
             BoxLayout:
                 orientation: 'horizontal'
-                spacing: 15
+                spacing: dp(15)
                 size_hint_y: None
-                height: 45
+                height: dp(45)
 
                 ToggleButton:
                     id: btn_easy
@@ -89,7 +89,7 @@
                         RoundedRectangle:
                             pos: self.pos
                             size: self.size
-                            radius: [8]
+                            radius: [dp(8)]
                     color: [0.067, 0.067, 0.106, 1] if self.state == 'down' else [0.804, 0.839, 0.957, 1]
 
                 ToggleButton:
@@ -107,7 +107,7 @@
                         RoundedRectangle:
                             pos: self.pos
                             size: self.size
-                            radius: [8]
+                            radius: [dp(8)]
                     color: [0.067, 0.067, 0.106, 1] if self.state == 'down' else [0.804, 0.839, 0.957, 1]
 
         # Mensagem de erro (invisível por padrão)
@@ -117,7 +117,7 @@
             color: 0.953, 0.545, 0.659, 1
             font_size: '14sp'
             size_hint_y: None
-            height: 30
+            height: dp(30)
 
         Widget: # Espaço elástico para empurrar os botões para baixo
 
@@ -127,7 +127,7 @@
             font_size: '18sp'
             bold: True
             size_hint_y: None
-            height: 55
+            height: dp(55)
             background_normal: ''
             background_color: 0, 0, 0, 0
             canvas.before:
@@ -136,7 +136,7 @@
                 RoundedRectangle:
                     pos: self.pos
                     size: self.size
-                    radius: [10]
+                    radius: [dp(10)]
             color: 0.067, 0.067, 0.106, 1
             on_press: root.iniciar_jogo()
 
@@ -145,7 +145,7 @@
             text: 'Ver Placar de Líderes'
             font_size: '16sp'
             size_hint_y: None
-            height: 48
+            height: dp(48)
             background_normal: ''
             background_color: 0, 0, 0, 0
             canvas.before:
@@ -154,7 +154,7 @@
                 RoundedRectangle:
                     pos: self.pos
                     size: self.size
-                    radius: [8]
+                    radius: [dp(8)]
             color: 0.804, 0.839, 0.957, 1
             on_press: root.ver_placar()
 
@@ -163,8 +163,8 @@
     name: 'game'
     BoxLayout:
         orientation: 'vertical'
-        padding: 20
-        spacing: 15
+        padding: dp(20)
+        spacing: dp(15)
         canvas.before:
             Color:
                 rgba: 0.117, 0.117, 0.180, 1
@@ -176,8 +176,8 @@
         BoxLayout:
             orientation: 'horizontal'
             size_hint_y: None
-            height: 60
-            spacing: 10
+            height: dp(60)
+            spacing: dp(10)
 
             Label:
                 text: 'Jogador: ' + root.jogador_nome
@@ -190,7 +190,7 @@
             BoxLayout:
                 orientation: 'vertical'
                 size_hint_x: None
-                width: 160
+                width: dp(160)
                 Label:
                     text: 'Jogadas: ' + str(root.jogadas)
                     font_size: '14sp'
@@ -208,15 +208,15 @@
         GridLayout:
             id: grid_tabuleiro
             cols: 4
-            spacing: 8
-            padding: 2
+            spacing: dp(8)
+            padding: dp(2)
 
         # Rodapé de controles
         BoxLayout:
             orientation: 'horizontal'
-            spacing: 15
+            spacing: dp(15)
             size_hint_y: None
-            height: 48
+            height: dp(48)
 
             Button:
                 text: 'Reiniciar'
@@ -230,7 +230,7 @@
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
-                        radius: [8]
+                        radius: [dp(8)]
                 color: 0.804, 0.839, 0.957, 1
                 on_press: root.reiniciar_jogo()
 
@@ -246,7 +246,7 @@
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
-                        radius: [8]
+                        radius: [dp(8)]
                 color: 0.067, 0.067, 0.106, 1
                 on_press: root.voltar_menu()
 
@@ -262,8 +262,8 @@
     name: 'leaderboard'
     BoxLayout:
         orientation: 'vertical'
-        padding: 20
-        spacing: 15
+        padding: dp(20)
+        spacing: dp(15)
         canvas.before:
             Color:
                 rgba: 0.117, 0.117, 0.180, 1
@@ -277,14 +277,14 @@
             bold: True
             color: 0.537, 0.706, 0.980, 1
             size_hint_y: None
-            height: 50
+            height: dp(50)
 
         # Seletor de placa por dificuldade
         BoxLayout:
             orientation: 'horizontal'
-            spacing: 12
+            spacing: dp(12)
             size_hint_y: None
-            height: 42
+            height: dp(42)
             ToggleButton:
                 id: tab_easy
                 text: 'Fácil (4x4)'
@@ -301,7 +301,7 @@
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
-                        radius: [6]
+                        radius: [dp(6)]
                 color: [0.067, 0.067, 0.106, 1] if self.state == 'down' else [0.804, 0.839, 0.957, 1]
                 on_press: root.carregar_placar('facil')
 
@@ -320,7 +320,7 @@
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
-                        radius: [6]
+                        radius: [dp(6)]
                 color: [0.067, 0.067, 0.106, 1] if self.state == 'down' else [0.804, 0.839, 0.957, 1]
                 on_press: root.carregar_placar('dificil')
 
@@ -331,8 +331,8 @@
                 orientation: 'vertical'
                 size_hint_y: None
                 height: self.minimum_height
-                spacing: 8
-                padding: [0, 5, 0, 5]
+                spacing: dp(8)
+                padding: [0, dp(5), 0, dp(5)]
 
         # Botão de retorno
         Button:
@@ -340,7 +340,7 @@
             font_size: '16sp'
             bold: True
             size_hint_y: None
-            height: 48
+            height: dp(48)
             background_normal: ''
             background_color: 0, 0, 0, 0
             canvas.before:
@@ -349,24 +349,24 @@
                 RoundedRectangle:
                     pos: self.pos
                     size: self.size
-                    radius: [8]
+                    radius: [dp(8)]
             color: 0.804, 0.839, 0.957, 1
             on_press: root.voltar_menu()
 
 
 <LeaderboardItem>:
     orientation: 'horizontal'
-    padding: [12, 8, 12, 8]
+    padding: [dp(12), dp(8), dp(12), dp(8)]
     size_hint_y: None
-    height: 45
-    spacing: 10
+    height: dp(45)
+    spacing: dp(10)
     canvas.before:
         Color:
             rgba: 0.192, 0.196, 0.266, 0.6
         RoundedRectangle:
             pos: self.pos
             size: self.size
-            radius: [6]
+            radius: [dp(6)]
 
     Label:
         text: root.posicao
@@ -406,31 +406,31 @@
         RoundedRectangle:
             pos: self.pos
             size: self.size
-            radius: [12]
+            radius: [dp(12)]
         Color:
             rgba: 0.192, 0.196, 0.266, 1
         Line:
             width: 1.2
-            rounded_rectangle: [self.x, self.y, self.width, self.height, 12, 12, 12, 12, 100]
+            rounded_rectangle: [self.x, self.y, self.width, self.height, dp(12), dp(12), dp(12), dp(12), 100]
 
     BoxLayout:
         orientation: 'vertical'
-        padding: 15
-        spacing: 12
+        padding: dp(15)
+        spacing: dp(12)
         Label:
             text: '¡VITÓRIA!'
             font_size: '22sp'
             bold: True
             color: 0.651, 0.890, 0.631, 1
             size_hint_y: None
-            height: 35
+            height: dp(35)
         Label:
             text: 'Parabéns, você encontrou todos os pares!'
             font_size: '15sp'
             color: 0.804, 0.839, 0.957, 0.9
             halign: 'center'
             size_hint_y: None
-            height: 25
+            height: dp(25)
         Label:
             id: stats_label
             text: 'Jogadas: 0 | Tempo: 00:00'
@@ -439,13 +439,13 @@
             color: 0.537, 0.706, 0.980, 1
             halign: 'center'
             size_hint_y: None
-            height: 30
+            height: dp(30)
         Widget: # Pequeno espaçador
         BoxLayout:
             orientation: 'horizontal'
-            spacing: 12
+            spacing: dp(12)
             size_hint_y: None
-            height: 45
+            height: dp(45)
             Button:
                 text: 'Jogar Novamente'
                 font_size: '14sp'
@@ -458,7 +458,7 @@
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
-                        radius: [6]
+                        radius: [dp(6)]
                 color: 0.067, 0.067, 0.106, 1
                 on_press: root.jogar_novamente()
             Button:
@@ -473,6 +473,6 @@
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
-                        radius: [6]
+                        radius: [dp(6)]
                 color: 0.804, 0.839, 0.957, 1
                 on_press: root.ir_para_menu()
