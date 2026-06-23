@@ -13,6 +13,16 @@ jobs:
       - name: Clonar o Repositorio
         uses: actions/checkout@v4
 
+      - name: Limpar Espaco em Disco (Evitar falta de espaco para o NDK/SDK)
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf "/usr/local/share/boost"
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+
+      - name: Verificar Espaco em Disco
+        run: df -h
+
       - name: Cache do Buildozer
         uses: actions/cache@v4
         with:
